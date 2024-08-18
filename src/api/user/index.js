@@ -1,14 +1,11 @@
 import request from '@/utils/request.js'
 
 // 用户登录
-export const postUserLogin = () => {
+export const postUserLogin = (data) => {
   return request({
     url: '/user/login',
     method: 'post',
-    data: {
-      username: 'admin',
-      password: '111111'
-    }
+    data
   })
 }
 

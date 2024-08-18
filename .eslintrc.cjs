@@ -34,6 +34,7 @@ module.exports = {
     'vue/no-mutating-props': 'off', // 不允许组件 prop的改变
     'vue/attribute-hyphenation': 'off', // 对模板中的自定义组件强制执行属性命名样式
 
-    'prettier/prettier': ['error', { endOfLine: 'auto' }]
+    'prettier/prettier': ['off', { endOfLine: 'auto' }], // 换行符为自动选择
+    'max-len': ['error', { code: 120 }] // 设置最大代码长度为120字符
   }
 }

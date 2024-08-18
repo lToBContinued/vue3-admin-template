@@ -1,2 +1,15 @@
 // 全局变量
 $color: red;
+
+$base-menu-width: 260px; // 左侧菜单的跨度
+$base-menu-background: #001529; // 左侧菜单的背景颜色
+$base-logo-title-fontsize: 22px; // 左侧菜单栏logo右侧文字大小
+$base-menu-logo-height: 50px; // logo高度
+
+$base-tabbar-height: 50px; // 顶部导航的高度
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

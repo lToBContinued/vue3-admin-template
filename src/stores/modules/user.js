@@ -1,11 +1,14 @@
 // 用户相关仓库
 import { defineStore } from 'pinia'
 import { postUserLogin } from '@/api/user/index.js'
+// 引入路由（常量路由）
+import { constantRoute } from '@/router/routes.js'
 
 const useUserStore = defineStore('User', {
   state: () => {
     return {
-      token: ''
+      token: '', // 用户token
+      menusRoutes: constantRoute // 仓库存储生成菜单需要数组（路由）
     }
   },
   actions: {
@@ -23,7 +26,7 @@ const useUserStore = defineStore('User', {
     }
   },
   getters: {},
-  
+
   // 持久化配置
   persist: [
     {

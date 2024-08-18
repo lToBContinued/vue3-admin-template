@@ -1,7 +1,6 @@
 // 统一浏览器默认标准盒子模型
 *,
-*:after
-*:before {
+*:after *:before {
   box-sizing: border-box;
   outline: none;
 }
@@ -123,7 +122,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 

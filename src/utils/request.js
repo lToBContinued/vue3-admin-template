@@ -22,7 +22,6 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (res) => {
     // 成功回调
-    console.log(res)
     return res.data
   },
   (err) => {

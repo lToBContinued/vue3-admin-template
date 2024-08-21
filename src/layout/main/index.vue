@@ -7,7 +7,11 @@
   </router-view>
 </template>
 
-<script setup></script>
+<script setup>
+defineExpose({
+  name: 'main'
+})
+</script>
 
 <style scoped lang="scss">
 .fade-enter-from {

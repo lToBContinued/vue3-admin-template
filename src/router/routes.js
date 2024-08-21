@@ -15,10 +15,6 @@ export const constantRoute = [
   {
     path: '/',
     name: 'layout',
-    meta: {
-      title: 'layout',
-      icon: 'Avatar'
-    },
     component: () => import('@/layout/index.vue'),
     redirect: '/home',
     children: [
@@ -42,52 +38,6 @@ export const constantRoute = [
       icon: 'DataBoard'
     },
     component: () => import('@/views/screen/index.vue')
-  },
-  // 权限管理
-  {
-    path: '/acl',
-    name: 'Acl',
-    meta: {
-      title: '权限管理',
-      icon: 'Lock'
-    },
-    redirect: '/acl/user',
-    component: () => import('@/layout/index.vue'),
-    children: [
-      // 用户管理
-      {
-        path: '/acl/user',
-        name: 'Acl',
-        meta: {
-          title: '用户管理',
-          hidden: false,
-          icon: 'User'
-        },
-        component: () => import('@/views/acl/user/index.vue')
-      },
-      // 角色管理
-      {
-        path: '/acl/roler',
-        name: 'Roler',
-        meta: {
-          title: '角色管理',
-          hidden: false,
-          icon: 'UserFilled'
-        },
-        component: () => import('@/views/acl/roler/index.vue')
-      },
-      // 菜单管理
-      {
-        path: '/acl/permission',
-        name: 'Permission',
-        meta: {
-          title: '菜单管理',
-          hidden: false,
-          icon: 'List'
-        },
-        component: () => import('@/views/acl/permission/index.vue')
-      }
-    ]
   },
   // 商品管理
   {
@@ -139,6 +89,52 @@ export const constantRoute = [
           icon: 'Orange'
         },
         component: () => import('@/views/product/sku/index.vue')
+      }
+    ]
+  },
+  // 权限管理
+  {
+    path: '/acl',
+    name: 'Acl',
+    meta: {
+      title: '权限管理',
+      icon: 'Lock'
+    },
+    component: () => import('@/layout/index.vue'),
+    redirect: '/acl/user',
+    children: [
+      // 用户管理
+      {
+        path: '/acl/user',
+        name: 'Acl',
+        meta: {
+          title: '用户管理',
+          hidden: false,
+          icon: 'User'
+        },
+        component: () => import('@/views/acl/user/index.vue')
+      },
+      // 角色管理
+      {
+        path: '/acl/roler',
+        name: 'Roler',
+        meta: {
+          title: '角色管理',
+          hidden: false,
+          icon: 'UserFilled'
+        },
+        component: () => import('@/views/acl/roler/index.vue')
+      },
+      // 菜单管理
+      {
+        path: '/acl/permission',
+        name: 'Permission',
+        meta: {
+          title: '菜单管理',
+          hidden: false,
+          icon: 'List'
+        },
+        component: () => import('@/views/acl/permission/index.vue')
       }
     ]
   },

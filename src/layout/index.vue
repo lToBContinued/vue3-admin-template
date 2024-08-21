@@ -14,7 +14,7 @@
     <div class="layout-tabbar"></div>
     <!--内容展示区-->
     <div class="layout-main">
-      <p style="height: 1000vh; background-color: lightcoral">一个段落</p>
+      <Main></Main>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@
 import Logo from './logo/index.vue'
 import Menu from './menu/index.vue'
 import useUserStore from '@/stores/modules/user.js'
+import Main from './main/index.vue'
 const userStore = useUserStore() // 用户仓库
 </script>
 

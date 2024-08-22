@@ -1,8 +1,8 @@
 <template>
   <div class="settingLayout">
     <div class="tabbar-right">
-      <el-button size="small" type="primary" circle icon="Refresh"></el-button>
-      <el-button size="small" type="primary" circle icon="FullScreen"></el-button>
+      <el-button size="small" type="primary" circle icon="Refresh" @click="pageRefresh"></el-button>
+      <el-button size="small" type="primary" circle icon="FullScreen" @click="changeFullScreen"></el-button>
       <el-button size="small" type="primary" circle icon="Setting"></el-button>
       <img class="tabbar-avatar" src="../../../../public/logo.jpg" alt="" />
       <!--下拉菜单-->
@@ -30,6 +30,24 @@
 defineExpose({
   name: 'Setting'
 })
+import useLayoutSettingStore from '@/stores/modules/setting.js'
+
+const layoutSettingStore = useLayoutSettingStore()
+
+// 刷新页面
+const pageRefresh = () => {
+  layoutSettingStore.refresh = !layoutSettingStore.refresh
+}
+
+// 全屏
+const changeFullScreen = () => {
+  let full = document.fullscreenElement // dom对象的全屏状态（布尔值）
+  if (!full){
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
 </script>
 
 <style scoped lang="scss">

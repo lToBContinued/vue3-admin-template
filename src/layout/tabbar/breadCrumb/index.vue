@@ -40,10 +40,6 @@ const layoutSettingStore = useLayoutSettingStore()
 const changeIcon = () => {
   layoutSettingStore.fold = !layoutSettingStore.fold
 }
-
-const handelBtn = () => {
-  console.log($route.matched)
-}
 </script>
 
 <style scoped lang="scss">

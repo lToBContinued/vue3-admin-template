@@ -51,7 +51,6 @@ const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
 .layoutContainer {
   width: 100%;
   height: 100vh;
-  background-color: #ccc;
 
   .layout-slider {
     width: $base-menu-width;

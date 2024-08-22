@@ -4,7 +4,8 @@ import { defineStore } from 'pinia'
 export const useLayoutSettingStore = defineStore('settingStore', {
   state: () => {
     return {
-      fold: false // 菜单是否折叠
+      fold: false, // 菜单是否折叠
+      refresh: false // tabbar的刷新按钮效果
     }
   }
 })

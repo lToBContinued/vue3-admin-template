@@ -14,7 +14,6 @@ request.interceptors.request.use(
     if (userStore.token) {
       config.headers['token'] = userStore.token
     }
-    console.log('请求拦截器，请求配置：', config)
     return config
   },
   (err) => {

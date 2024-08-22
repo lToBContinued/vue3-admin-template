@@ -9,11 +9,6 @@ import { onMounted } from 'vue'
 import useUserStore from '@/stores/modules/user.js'
 
 const userStore = useUserStore() // 用户仓库
-
-onMounted(() => {
-  // 获取用户信息
-  userStore.getUserInfo()
-})
 </script>
 
 <style scoped></style>

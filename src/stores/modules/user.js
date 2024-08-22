@@ -36,6 +36,9 @@ const useUserStore = defineStore('User', {
         // 获取用户信息成功
         this.username = res.data.checkUser.username
         this.avatar = res.data.checkUser.avatar
+        return 'ok'
+      } else {
+        return Promise.reject('获取用户信息失败')
       }
     },
 

@@ -48,11 +48,12 @@
 import { ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import useUserStore from '@/stores/modules/user.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import getTimePeriod from '@/utils/getTimePeriod.js'
 
 const $router = useRouter()
+const $route = useRoute()
 const userStore = useUserStore() // 用户仓库
 const loading = ref(false) // 按钮加载效果
 // 用户登录账号和密码
@@ -89,7 +90,7 @@ const login = () => {
         await userStore.userLogin(loginForm.value)
         changeRememberStatus() // 是否记住账号密码
         $router.push({
-          path: '/'
+          path: $route.query?.redirect || '/'
         })
         ElNotification({
           type: 'success',

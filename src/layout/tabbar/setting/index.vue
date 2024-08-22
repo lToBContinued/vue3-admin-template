@@ -4,11 +4,11 @@
       <el-button size="small" type="primary" circle icon="Refresh" @click="pageRefresh"></el-button>
       <el-button size="small" type="primary" circle icon="FullScreen" @click="changeFullScreen"></el-button>
       <el-button size="small" type="primary" circle icon="Setting"></el-button>
-      <img class="tabbar-avatar" src="../../../../public/logo.jpg" alt="" />
+      <img class="tabbar-avatar" :src="userStore.avatar" alt="" />
       <!--下拉菜单-->
       <el-dropdown>
         <span class="el-dropdown-link">
-          用户名
+          {{ userStore.username }}
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
@@ -31,8 +31,10 @@ defineExpose({
   name: 'Setting'
 })
 import useLayoutSettingStore from '@/stores/modules/setting.js'
+import useUserStore from '@/stores/modules/user.js'
 
-const layoutSettingStore = useLayoutSettingStore()
+const layoutSettingStore = useLayoutSettingStore() // layout相关配置仓库
+const userStore = useUserStore() // 用户仓库
 
 // 刷新页面
 const pageRefresh = () => {

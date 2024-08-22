@@ -16,9 +16,8 @@ defineExpose({
 
 import useLayoutSettingStore from '@/stores/modules/setting.js'
 
-const layoutSettingStore = useLayoutSettingStore()
-// 控制当前组件是否销毁重建
-let flag = ref(true)
+const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
+let flag = ref(true) // 控制当前组件是否销毁重建
 
 // 监听仓库中的refresh值，如果发生棉花，则刷新页面
 watch(

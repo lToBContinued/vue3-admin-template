@@ -14,6 +14,7 @@ import 'virtual:svg-icons-register' // 导入svg图标
 import globalComponent from './components/index' // 全局组件
 import './styles/index.scss' // 引入模板的全局样式
 import pinia from '@/stores/index.js' // 引入pinia仓库
+import './permission.js' // 引入全局导航守卫
 
 app.use(createPinia())
 app.use(router)

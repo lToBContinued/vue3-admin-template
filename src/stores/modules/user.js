@@ -1,6 +1,6 @@
 // 用户相关仓库
 import { defineStore } from 'pinia'
-import { getUserInfo, postUserLogin } from '@/api/user/index.js'
+import { getUserInfoApi, postUserLoginApi } from '@/api/user/index.js'
 // 引入路由（常量路由）
 import { constantRoute } from '@/router/routes.js'
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token.js'
@@ -17,7 +17,7 @@ const useUserStore = defineStore('User', {
   actions: {
     // 用户登录
     async userLogin(data) {
-      const res = await postUserLogin(data)
+      const res = await postUserLoginApi(data)
       // 登录成功
       if (res.code === 200) {
         this.token = res.data.token
@@ -31,7 +31,7 @@ const useUserStore = defineStore('User', {
 
     // 获取用户信息
     async getUserInfo() {
-      const res = await getUserInfo()
+      const res = await getUserInfoApi()
       if (res.code === 200) {
         // 获取用户信息成功
         this.username = res.data.checkUser.username

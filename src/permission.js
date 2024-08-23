@@ -35,14 +35,12 @@ router.beforeEach(async (to, from, next) => {
           next()
         } catch (err) {
           // token过期，获取不到用户信息 -> 退出登录
-          console.log('获取用户信息失败')
-          userStore.userLogout()
+          await userStore.userLogout()
           next({ path: '/login', query: { redirect: to.path} })
         }
       }
     }
   } else {
-    console.log('to path:', to.path)
     // 如果不存在token，则用户未登录
     if (to.path === '/login') {
       next()

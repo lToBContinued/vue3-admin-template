@@ -4,6 +4,7 @@ import request from '@/utils/request.js'
 const LOGIN_URL = '/admin/acl/index/login' // 登录
 const USER_INFO_URL = '/admin/acl/index/info' // 获取用户信息
 const LOGOUT_URL = '/admin/acl/index/logout' // 退出登录
+const MENU_URL = '/admin/acl/index/menu' // 获取菜单列表
 
 // 用户登录
 export const postUserLoginApi = (data) => {
@@ -27,5 +28,12 @@ export const postLogoutApi = (data = {}) => {
     url: LOGOUT_URL,
     method: 'post',
     data
+  })
+}
+
+// 获取菜单列表
+export const getMenuListApi = () => {
+  return request({
+    url: MENU_URL
   })
 }

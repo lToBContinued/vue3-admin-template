@@ -67,11 +67,11 @@ const changeFullScreen = () => {
 }
 
 // 退出登录
-const confirmLogout = () => {
-  userStore.userLogout()
+const confirmLogout = async () => {
+  await userStore.userLogout()
   dialogVisible.value = false
   // 跳转到登录页
-  $router.push({
+  await $router.push({
     path: '/login',
     query: {
       redirect: $route.path

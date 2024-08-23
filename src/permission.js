@@ -3,6 +3,8 @@ import router from '@/router'
 import nprogress from 'nprogress' // 引入进度条插件
 import 'nprogress/nprogress.css'
 import useUserStore from '@/stores/modules/user.js'
+import setting from './setting.js'
+nprogress.configure({ showSpinner: false }) // 关闭旋转进度条
 
 // 全局前置守卫
 /*
@@ -11,6 +13,7 @@ import useUserStore from '@/stores/modules/user.js'
  * next：路由的放行函数
  * */
 router.beforeEach(async (to, from, next) => {
+  document.title = `${setting.title}-${to.meta.title}` // 修改页面标题
   const userStore = useUserStore() // 用户仓库
   const token = userStore.token // 用户token
   const username = userStore.username // 用户名

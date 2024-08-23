@@ -1,7 +1,7 @@
 <template>
   <div class="layoutContainer">
     <!--左侧菜单-->
-    <div class="layout-slider" :class="{ fold: layoutSettingStore.fold }">
+    <div class="layout-slider">
       <Logo></Logo>
       <!--菜单-->
       <el-scrollbar>

@@ -2,7 +2,8 @@
 
 // 统一浏览器默认标准盒子模型
 *,
-*:after *:before {
+*:after,
+*:before {
   box-sizing: border-box;
   outline: none;
 }

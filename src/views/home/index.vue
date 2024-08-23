@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import useUserStore from '@/stores/modules/user.js'
 
 const userStore = useUserStore() // 用户仓库

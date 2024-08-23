@@ -1,6 +1,10 @@
 <template>
-  <div class="logo">
-    <img v-if="setting.logoHidden" :src="setting.logo" alt="" :class="{ fold: layoutSettingStore.fold }" />
+  <div
+    class="logo"
+    :class="{ fold: layoutSettingStore.fold }"
+    :style="{ height: !setting.logoHidden ? '50px' : 'fit-content' }"
+  >
+    <img v-if="!setting.logoHidden" :src="setting.logo" alt="" :class="{ fold: layoutSettingStore.fold }" />
     <h1>{{ setting.title }}</h1>
   </div>
 </template>
@@ -20,20 +24,20 @@ defineExpose({
 .logo {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 50px;
-  padding: 20px 0;
+  height: fit-content;
+  margin: 20px 0;
   overflow: hidden;
+
+  &.fold {
+    justify-content: flex-start;
+  }
 
   img {
     height: $base-menu-logo-height;
-    margin: 0 10px 0 10px;
-    border-radius: 25px;
-    transition: all 0.3s;
-
-    &.fold {
-      margin-left: 0;
-    }
+    margin-right: 10px;
+    border-radius: 999px;
   }
 
   h1 {

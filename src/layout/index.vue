@@ -57,6 +57,7 @@ const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
     height: 100vh;
     background-color: $base-menu-background;
     transition: all 0.3s;
+    overflow: hidden;
 
     .el-scrollbar {
       width: 100%;
@@ -68,7 +69,7 @@ const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
     }
 
     &.fold {
-      width: 50px;
+      width: $base-menu-min-width;
     }
   }
 
@@ -88,13 +89,13 @@ const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
   }
 
   .layout-main {
-    $padding: 20px;
     position: absolute;
     top: $base-tabbar-height;
     left: $base-menu-width;
-    width: calc(100% - $base-menu-width - $padding * 2);
-    height: calc(100vh - $base-tabbar-height - $padding * 2);
-    padding: $padding;
+    width: calc(100% - $base-menu-width);
+    height: calc(100vh - $base-tabbar-height);
+    padding: 20px;
+    background-color: #efefef;
     overflow: auto;
     transition: all 0.3s;
 

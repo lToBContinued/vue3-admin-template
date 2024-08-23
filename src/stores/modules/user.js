@@ -46,7 +46,7 @@ const useUserStore = defineStore('User', {
     userLogout() {
       this.username = ''
       this.avatar = ''
-      REMOVE_TOKEN()
+      this.token = REMOVE_TOKEN()
     }
   },
   getters: {}

@@ -39,6 +39,7 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
+    console.log('to path:', to.path)
     // 如果不存在token，则用户未登录
     if (to.path === '/login') {
       next()
@@ -46,7 +47,6 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/login', query: { redirect: to.path } })
     }
   }
-  next()
 })
 
 // 全局后置守卫

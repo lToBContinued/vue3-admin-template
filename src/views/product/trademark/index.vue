@@ -44,7 +44,7 @@
 
     <!--添加/修改品牌对话框-->
     <el-dialog v-model="dialogVisible" :title="dialogTitle" width="40%" :close-on-click-modal="false">
-      <el-form ref="formRef" :rules="rules" :model="trademarkParams" style="width: 80%">
+      <el-form ref="ruleFormRef" :rules="rules" :model="trademarkParams" style="width: 80%">
         <el-form-item label="品牌名称" prop="tmName" label-width="100">
           <el-input v-model="trademarkParams.tmName" placeholder="请输入品牌名称"></el-input>
         </el-form-item>
@@ -67,7 +67,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="confirm">确定</el-button>
+          <el-button type="primary" @click="confirm(ruleFormRef)">确定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -90,8 +90,8 @@ const pageSize = ref(5) // 每页记录数
 const total = ref(0) // 数据总数
 const dialogVisible = ref(false) // 对话框可见性
 const dialogTitle = ref('') // 对话框标题
-const rowData = ref({}) // 当前行数据
 const dialogMode = ref('') // 对话框模式(新增/修改)
+const ruleFormRef = ref(null) // 表单dom
 // 验证规则
 const rules = ref({
   tmName: [{ required: true, message: '请输入品牌名称', trigger: 'blur' }],
@@ -100,7 +100,8 @@ const rules = ref({
 // 收集品牌数据
 const trademarkParams = ref({
   tmName: '',
-  logoUrl: ''
+  logoUrl: '',
+  id: ''
 })
 
 // 获取所有品牌列表
@@ -157,7 +158,18 @@ const beforeImgUpload = (rawFile) => {
 }
 // 图片上传成功的钩子
 const handleAvatarSuccess = (response) => {
-  trademarkParams.value.logoUrl = response.data
+  if (response.code === 200) {
+    ElMessage({
+      message: '上传图片成功',
+      type: 'success'
+    })
+    trademarkParams.value.logoUrl = response.data
+  } else {
+    ElMessage({
+      message: '上传图片失败',
+      type: 'error'
+    })
+  }
 }
 
 // 添加品牌
@@ -175,45 +187,51 @@ const edit = (mode, row) => {
   trademarkParams.value['logoUrl'] = ''
   dialogMode.value = mode
   dialogTitle.value = '修改品牌'
-  rowData.value = row
+  Object.assign(trademarkParams.value, row)
   dialogVisible.value = true
 }
 
 // 对话框确定按钮点击
-const confirm = async () => {
-  const res = await postAddOrUpdateTrademarkApi(dialogMode.value, trademarkParams.value)
-  if (res.code === 200) {
-    ElMessage({
-      message: '添加品牌成功',
-      type: 'success'
-    })
-    await getTrademarkList()
-    await getTrademarkListByPageAndLimit()
-  } else {
-    ElMessage({
-      message: '添加品牌失败',
-      type: 'error'
-    })
-  }
-  dialogVisible.value = false
+const confirm = async (formEl) => {
+  await formEl.validate(async (valid, fields) => {
+    if (valid) {
+      const res = await postAddOrUpdateTrademarkApi(dialogMode.value, trademarkParams.value)
+      if (res.code === 200) {
+        ElMessage({
+          message: res.message,
+          type: 'success'
+        })
+        await getTrademarkList()
+        await getTrademarkListByPageAndLimit()
+      } else {
+        ElMessage({
+          message: res.message,
+          type: 'error'
+        })
+      }
+      dialogVisible.value = false
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
 }
 
 // 删除品牌
-const remove = async (value) => {
+const remove = async (row) => {
   const data = {
-    id: value.id
+    id: row.id
   }
   const res = await deleteRemoveTrademarkApi(data)
   if (res.code === 200) {
     ElMessage({
-      message: '删除成功',
+      message: res.message,
       type: 'success'
     })
     await getTrademarkList()
     await getTrademarkListByPageAndLimit()
   } else {
     ElMessage({
-      message: res.data,
+      message: res.message,
       type: 'error'
     })
   }

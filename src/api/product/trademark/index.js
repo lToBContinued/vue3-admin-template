@@ -28,8 +28,8 @@ export const deleteRemoveTrademarkApi = (data = {}) => {
 // 新增/修改品牌
 export const postAddOrUpdateTrademarkApi = (mode, data = {}) => {
   return request({
-    url: `${TRADEMARK_URL.BASE_TRADEMARK_URL}${mode === 'add'? '/save' : '/update'}`,
-    method: `${mode === 'add'? 'post' : 'put'}`,
+    url: `${TRADEMARK_URL.BASE_TRADEMARK_URL}${mode === 'add' ? '/save' : '/update'}`,
+    method: `${mode === 'add' ? 'post' : 'put'}`,
     data
   })
 }

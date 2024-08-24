@@ -2,10 +2,6 @@
   <div><h1>数据大屏一级路由组件</h1></div>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

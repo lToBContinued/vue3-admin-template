@@ -36,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
         } catch (err) {
           // token过期，获取不到用户信息 -> 退出登录
           await userStore.userLogout()
-          next({ path: '/login', query: { redirect: to.path} })
+          next({ path: '/login', query: { redirect: to.path } })
         }
       }
     }

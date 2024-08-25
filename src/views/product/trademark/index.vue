@@ -92,16 +92,34 @@ const dialogVisible = ref(false) // 对话框可见性
 const dialogTitle = ref('') // 对话框标题
 const dialogMode = ref('') // 对话框模式(新增/修改)
 const ruleFormRef = ref(null) // 表单dom
-// 验证规则
-const rules = ref({
-  tmName: [{ required: true, message: '请输入品牌名称', trigger: 'blur' }],
-  logoUrl: [{ required: true, message: '请上传品牌logo', trigger: 'blur' }]
-})
 // 收集品牌数据
 const trademarkParams = ref({
   tmName: '',
   logoUrl: '',
   id: ''
+})
+
+// 自定义校验规则品牌名
+const validatorTmName = (rule, value, callback) => {
+  if (value.trim().length >= 2) {
+    callback()
+  } else {
+    callback(new Error('品牌名称至少为2个字符'))
+  }
+}
+// 自定义校验规则品牌logo
+const validatorLogoUrl = (rule, value, callback) => {
+  if (value) {
+    callback()
+  } else {
+    callback(new Error('请上传品牌logo'))
+  }
+}
+
+// 验证规则
+const rules = ref({
+  tmName: [{ required: true, validator: validatorTmName, trigger: 'blur' }],
+  logoUrl: [{ required: true, validator: validatorLogoUrl, trigger: 'blur' }]
 })
 
 // 获取所有品牌列表
@@ -164,6 +182,7 @@ const handleAvatarSuccess = (response) => {
       type: 'success'
     })
     trademarkParams.value.logoUrl = response.data
+    ruleFormRef.value.clearValidate('logoUrl') // 清除校验结果
   } else {
     ElMessage({
       message: '上传图片失败',
@@ -179,6 +198,7 @@ const addBrand = (mode) => {
   dialogMode.value = mode
   dialogTitle.value = '添加品牌'
   dialogVisible.value = true
+  ruleFormRef.value?.clearValidate(['tmName', 'logoUrl']) // 清除校验结果
 }
 
 // 编辑品牌
@@ -189,6 +209,7 @@ const edit = (mode, row) => {
   dialogTitle.value = '修改品牌'
   Object.assign(trademarkParams.value, row)
   dialogVisible.value = true
+  ruleFormRef.value?.clearValidate(['tmName', 'logoUrl']) // 清除校验结果
 }
 
 // 对话框确定按钮点击

@@ -20,7 +20,7 @@
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="{ row }">
             <el-button plain type="primary" size="small" @click="edit('edit', row)" icon="Edit"> 编辑 </el-button>
-            <el-popconfirm title="确定要删除吗" @confirm="remove(row)">
+            <el-popconfirm :title="`确定要删除${row.tmName}吗?`" @confirm="remove(row)" width="200" icon="Delete">
               <template #reference>
                 <el-button plain type="danger" size="small" icon="Delete">删除</el-button>
               </template>

@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <h1>属性管理</h1>
+  <div class="attrLayout">
+    <category-search></category-search>
+    <info></info>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Info from '@/views/product/attr/components/info.vue'
+import CategorySearch from '@/components/Search/CategorySearch.vue'
+</script>
 
 <style scoped lang="scss"></style>

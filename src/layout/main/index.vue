@@ -39,7 +39,7 @@ watch(
 }
 
 .fade-enter-active {
-  transition: all 0.3s;
+  transition: all 0.5s;
 }
 
 .fade-enter-to {

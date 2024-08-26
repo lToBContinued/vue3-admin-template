@@ -31,7 +31,7 @@ request.interceptors.response.use(
   (err) => {
     // 失败回调
     let message
-    let status = err.res.status
+    let status = err.data.status
     if (status === 401) {
       message = 'token过期'
     } else if (status === 403) {

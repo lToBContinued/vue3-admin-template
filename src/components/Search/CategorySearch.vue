@@ -25,9 +25,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="三级分类">
-          <el-select v-model="categoryStore.category3Id" placeholder="请选择" style="width: 240px" clearable>
+          <el-select
+            v-model="categoryStore.category3Id"
+            placeholder="请选择"
+            style="width: 240px"
+            clearable
+          >
             <el-option v-for="item in categoryStore.category3List" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchAttr">查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -52,10 +60,16 @@ const selectChange = async (mode) => {
     categoryStore.category3Id = ''
     await categoryStore.getCategory2List()
   }
-  if (mode === 2){
+  if (mode === 2) {
     categoryStore.category3Id = ''
     await categoryStore.getCategory3List()
+    await categoryStore.getAttrList()
   }
+}
+
+// 查询属性列表
+const searchAttr = async () => {
+    await categoryStore.getAttrList()
 }
 </script>
 

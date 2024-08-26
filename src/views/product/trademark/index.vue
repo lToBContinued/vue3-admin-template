@@ -40,6 +40,12 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
+      <gn-pagination
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="total"
+        @
+      ></gn-pagination>
     </el-card>
 
     <!--添加/修改品牌对话框-->

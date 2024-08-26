@@ -9,9 +9,9 @@
       >
         添加平台属性
       </el-button>
-      <el-table :data="attrList" style="margin-top: 10px" border>
-        <el-table-column label="序号" width="80" align="center"></el-table-column>
-        <el-table-column label="属性名称" width="120"></el-table-column>
+      <el-table :data="categoryStore.attrList" style="margin-top: 10px" border>
+        <el-table-column label="序号" type="index" width="80" align="center"></el-table-column>
+        <el-table-column label="属性名称" width="120" prop="attrName"></el-table-column>
         <el-table-column label="属性值名称"></el-table-column>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="{ row }">
@@ -29,11 +29,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import useCategoryStore from '@/stores/modules/category.js'
 
 const categoryStore = useCategoryStore() // 品牌分类仓库
-const attrList = ref([])
 
 // 添加
 const addAttr = (mode) => {

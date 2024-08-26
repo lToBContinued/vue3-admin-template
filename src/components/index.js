@@ -2,10 +2,12 @@
 import SvgIcon from './SvgIcon/index.vue'
 import Search from './Search/CategorySearch.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue' // 引入element的所有图表
+import GnPagination from './gn-pagination/index.vue'
 
 const allGlobalComponent = {
   SvgIcon,
-  Search
+  Search,
+  GnPagination
 }
 
 // 对外暴露插件对象

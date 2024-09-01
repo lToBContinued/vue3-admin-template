@@ -4,4 +4,4 @@ const ATTR_URL = {
   C3_URL: '/admin/product/getCategory3',
   ATTR_INFO_URL: '/admin/product/attrInfoList'
 }
- export default ATTR_URL
+export default ATTR_URL

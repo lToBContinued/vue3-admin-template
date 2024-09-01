@@ -30,21 +30,12 @@
       </el-table>
 
       <!--分页器-->
-      <el-pagination
-        v-model:current-page="currentPage"
-        v-model:page-size="pageSize"
-        :page-sizes="[5, 10, 20, 50]"
-        background
-        layout="prev, pager, next, jumper, ->, total, sizes"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
       <gn-pagination
         :current-page="currentPage"
         :page-size="pageSize"
         :total="total"
-        @
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
       ></gn-pagination>
     </el-card>
 

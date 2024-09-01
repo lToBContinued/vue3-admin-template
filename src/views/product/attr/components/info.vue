@@ -1,12 +1,7 @@
 <template>
   <div class="infoLayout">
     <el-card>
-      <el-button
-        type="primary"
-        icon="Plus"
-        @click="addAttr('add')"
-        :disabled="!categoryStore.category3Id"
-      >
+      <el-button type="primary" icon="Plus" @click="addAttr('add')" :disabled="!categoryStore.category3Id">
         添加平台属性
       </el-button>
       <el-table :data="categoryStore.attrList" style="margin-top: 10px" border>

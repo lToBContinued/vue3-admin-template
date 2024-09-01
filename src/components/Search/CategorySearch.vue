@@ -29,9 +29,6 @@
             <el-option v-for="item in categoryStore.category3List" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="searchAttr">查询</el-button>
-        </el-form-item>
       </el-form>
     </el-card>
   </div>
@@ -50,6 +47,7 @@ reqCategory1List()
 // 下拉框值改变
 const selectChange = async (mode) => {
   if (mode === 1) {
+    categoryStore.category2List = []
     categoryStore.category2Id = ''
     categoryStore.category3List = []
     categoryStore.category3Id = ''
@@ -58,13 +56,7 @@ const selectChange = async (mode) => {
   if (mode === 2) {
     categoryStore.category3Id = ''
     await categoryStore.getCategory3List()
-    await categoryStore.getAttrList()
   }
-}
-
-// 查询属性列表
-const searchAttr = async () => {
-  await categoryStore.getAttrList()
 }
 </script>
 

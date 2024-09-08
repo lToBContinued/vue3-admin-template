@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="{ row }">
-            <el-button plain type="primary" size="small" @click="goEdit('edit', row)" icon="Edit"> 编辑 </el-button>
+            <el-button plain type="primary" size="small" @click="updateAttr(row)" icon="Edit"> 编辑 </el-button>
             <el-popconfirm :title="`确定要删除吗?`" @confirm="removeAttr(row)" width="200" icon="Delete">
               <template #reference>
                 <el-button plain type="danger" size="small" icon="Delete">删除</el-button>
@@ -77,9 +77,9 @@
 
 <script setup>
 import useCategoryStore from '@/stores/modules/category.js'
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, ref, watch, onBeforeUnmount } from 'vue'
 import { ElMessage } from 'element-plus'
-import { postAddOrUpdateAttrApi } from '@/api/product/attr/index.js'
+import { deleteAttrApi, postAddOrUpdateAttrApi } from '@/api/product/attr/index.js'
 
 defineProps({
   // 属性列表
@@ -103,6 +103,11 @@ const attrParams = ref({
 })
 const inputArr = ref([]) // 存储输入框实例的数组
 
+// 路由销毁的时候，将仓库中相关数据清空
+onBeforeUnmount(() => {
+  categoryStore.$reset()
+})
+
 // 监听场景值，控制搜索卡片中下拉框的禁用状态
 watch(scene, () => {
   emit('change-scene', scene.value)
@@ -123,13 +128,27 @@ const goAddAttr = () => {
 }
 
 // 去编辑表格中的属性
-const goEdit = (mode, row) => {
-  console.log(mode, row) // TODO:删除log
+const updateAttr = (row) => {
+  scene.value = 1
+  Object.assign(attrParams.value, JSON.parse(JSON.stringify(row))) // 使用JSON进行深拷贝
 }
 
 // 删除表格中的属性
-const removeAttr = (row) => {
-  console.log(row) // TODO:删除log
+const removeAttr = async (row) => {
+  const res = await deleteAttrApi(row.id)
+  console.log(res) // TODO:删除log
+  if (res.code === 200) {
+    ElMessage({
+      message: '删除成功',
+      type: 'success'
+    })
+    emit('get-attr-list')
+  } else {
+    ElMessage({
+      message: '删除失败，请重试',
+      type: 'error'
+    })
+  }
 }
 
 // 添加属性

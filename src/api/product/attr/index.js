@@ -38,3 +38,11 @@ export const postAddOrUpdateAttrApi = (data = {}) => {
     data
   })
 }
+
+// 删除属性
+export const deleteAttrApi = (attrId) => {
+  return request({
+    url: `${ATTR_URL.DELETE_ARRT_URL}/${attrId}`,
+    method: 'DELETE'
+  })
+}

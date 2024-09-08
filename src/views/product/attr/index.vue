@@ -42,5 +42,3 @@ const changeScene = (mode) => {
   scene.value = mode
 }
 </script>
-
-<style scoped lang="scss"></style>

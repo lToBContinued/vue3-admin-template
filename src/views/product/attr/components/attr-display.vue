@@ -46,19 +46,29 @@
       <el-table :data="attrParams.attrValueList" border style="margin: 10px 0">
         <el-table-column label="序号" type="index" width="80" align="center"></el-table-column>
         <el-table-column label="属性值名称">
-          <template #default="{ row }">
-            <el-input placeholder="请输入属性值名称" v-model="row.valueName"></el-input>
+          <template #default="{ row, $index }">
+            <el-input
+              :ref="
+                (vc) => {
+                  inputArr[$index] = vc
+                }
+              "
+              v-if="row.flag"
+              @blur="toLook(row, $index)"
+              placeholder="请输入属性值名称"
+              v-model="row.valueName"
+            ></el-input>
+            <div v-else @click="toEdit(row, $index)">{{ row.valueName }}</div>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="200">
-          <template #default="{ row }">
-            <el-button type="primary" plain size="small" icon="Edit" @click="edit(row)">修改 </el-button>
-            <el-button type="danger" plain size="small" icon="Delete" @click="removeAddAttr(row)"> 删除 </el-button>
+          <template #default="{ $index }">
+            <el-button type="danger" plain size="small" icon="Delete" @click="removeAddAttr($index)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="button-group">
-        <el-button type="primary" @click="save">保存</el-button>
+        <el-button type="primary" @click="save" :disabled="attrParams.attrValueList.length === 0"> 保存 </el-button>
         <el-button plain @click="cancel">取消</el-button>
       </div>
     </el-card>
@@ -67,7 +77,7 @@
 
 <script setup>
 import useCategoryStore from '@/stores/modules/category.js'
-import { ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { postAddOrUpdateAttrApi } from '@/api/product/attr/index.js'
 
@@ -91,6 +101,7 @@ const attrParams = ref({
   categoryId: categoryStore.paramsC3Id, // 三级分类的id
   categoryLevel: 3 // 必须为三级分类（固定值）
 })
+const inputArr = ref([]) // 存储输入框实例的数组
 
 // 监听场景值，控制搜索卡片中下拉框的禁用状态
 watch(scene, () => {
@@ -122,21 +133,21 @@ const removeAttr = (row) => {
 }
 
 // 添加属性
-const addAttr = async () => {
+const addAttr = () => {
   // 向数组添加一个属性值对象
   attrParams.value.attrValueList.push({
-    valueName: ''
+    valueName: '', // 属性值名称
+    flag: true // 控制每一个属性值的编辑模式与查看模式的切换
+  })
+  // 获取最后的input组件，获取焦点
+  nextTick(() => {
+    inputArr.value[attrParams.value.attrValueList.length - 1].focus()
   })
 }
 
-// 修改属性
-const edit = (row) => {
-  console.log(row) // TODO:删除log
-}
-
 // 删除属性
-const removeAddAttr = (row) => {
-  console.log(row) // TODO:删除log
+const removeAddAttr = ($index) => {
+  attrParams.value.attrValueList.splice($index, 1)
 }
 
 // 保存添加
@@ -156,12 +167,49 @@ const save = async () => {
       type: 'error'
     })
   }
-  console.log('新增属性结果：', res) // TODO:删除log
 }
 
 // 取消添加
 const cancel = () => {
   scene.value = 0
+}
+
+// 属性值表单元素失去焦点事件
+const toLook = (row, $index) => {
+  // 添加属性不能为空
+  if (row.valueName.trim() === '') {
+    attrParams.value.attrValueList.splice($index, 1)
+    ElMessage({
+      message: '请输入属性值名称',
+      type: 'warning'
+    })
+    return
+  }
+
+  // 添加属性不能重复
+  let repeat = attrParams.value.attrValueList.find((item) => {
+    // 把当前失去焦点的属性值对象从当前数组中排除，再进行判断
+    if (item !== row) {
+      return item.valueName === row.valueName
+    }
+  })
+  if (repeat) {
+    // 将重复的属性值删除
+    attrParams.value.attrValueList.splice($index, 1)
+    ElMessage({
+      message: '属性值重复，请重新输入',
+      type: 'warning'
+    })
+    return
+  }
+  row.flag = false
+}
+const toEdit = (row, $index) => {
+  row.flag = true
+  // 输入框自动聚焦
+  nextTick(() => {
+    inputArr.value[$index].focus()
+  })
 }
 </script>
 

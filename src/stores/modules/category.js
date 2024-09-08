@@ -1,11 +1,6 @@
 // 商品分类全局组件仓库
 import { defineStore } from 'pinia'
-import {
-  getAttrInfoListApi,
-  getCategory1ListApi,
-  getCategory2ListApi,
-  getCategory3ListApi
-} from '@/api/product/attr/index.js'
+import { getCategory1ListApi, getCategory2ListApi, getCategory3ListApi } from '@/api/product/attr/index.js'
 
 const useCategoryStore = defineStore('category', {
   state: () => {
@@ -15,7 +10,8 @@ const useCategoryStore = defineStore('category', {
       category2List: [], // 二级分类列表
       category2Id: '', // 二级分类id
       category3List: [], // 三级分类列表
-      category3Id: '' // 三级分类id
+      category3Id: '', // 三级分类id
+      paramsC3Id: '' // 收集参数：添加属性时，三级分类的id
     }
   },
   actions: {

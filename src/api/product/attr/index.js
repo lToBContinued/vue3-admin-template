@@ -29,3 +29,12 @@ export const getAttrInfoListApi = (id = {}) => {
     url: `${ATTR_URL.ATTR_INFO_URL}/${category1Id}/${category2Id}/${category3Id}`
   })
 }
+
+// 新增或修改属性
+export const postAddOrUpdateAttrApi = (data = {}) => {
+  return request({
+    url: ATTR_URL.ADD_OR_UPDATE_ATTR_URL,
+    method: 'POST',
+    data
+  })
+}

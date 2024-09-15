@@ -2,7 +2,7 @@
 import SvgIcon from './SvgIcon/index.vue'
 import Search from './Search/CategorySearch.vue'
 import GnPagination from './gn-pagination/index.vue'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue' // 引入element的所有图表
+import * as ElementPlusIconsVue from '@element-plus/icons-vue' // 引入element的所有图标
 
 const allGlobalComponent = {
   SvgIcon,

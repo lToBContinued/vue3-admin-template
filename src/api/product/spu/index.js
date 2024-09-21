@@ -37,3 +37,21 @@ export const getSaleAttrListApi = (params = {}) => {
     url: `${SPU_URL.GET_SALE_ATTR_LIST_URL}/${spuId}`
   })
 }
+
+// 添加/更新一个新的spu
+export const addOrUpdateSpu = (data = {}) => {
+  // 如果spu对象有id，更新已有的spu
+  if (data.id) {
+    return request({
+      url: `${SPU_URL.UPDATE_SPU_URL}`,
+      methods: 'POST',
+      data
+    })
+  } else {
+    return request({
+      url: `${SPU_URL.ADD_SPU_URL}`,
+      methods: 'POST',
+      data
+    })
+  }
+}

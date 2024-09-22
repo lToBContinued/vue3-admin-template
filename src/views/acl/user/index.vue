@@ -1,9 +1,9 @@
 <template>
   <div class="userLayout">
     <el-card class="search-form">
-      <el-form ref="form" v-model="formData" :inline="true">
+      <el-form ref="searchFormRef" :model="searchForm" :inline="true">
         <el-form-item label="用户名" prop="userName">
-          <el-input v-model="formData.userName" placeholder="请输入用户名"></el-input>
+          <el-input ref="searchInputRef" v-model="searchForm.userName" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -51,23 +51,23 @@
       </template>
 
       <template #default>
-        <el-form>
-          <el-form-item label="用户姓名">
-            <el-input placeholder="请输入用户姓名"></el-input>
+        <el-form ref="drawerFormRef" :model="drawerForm" :rules="drawerFormRules">
+          <el-form-item label="用户姓名" prop="username">
+            <el-input placeholder="请输入用户姓名" v-model="drawerForm.username"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称">
-            <el-input placeholder="请输入用户昵称"></el-input>
+          <el-form-item label="用户昵称" prop="name">
+            <el-input placeholder="请输入用户昵称" v-model="drawerForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="用户密码">
-            <el-input placeholder="请输入密码"></el-input>
+          <el-form-item label="用户密码" prop="password">
+            <el-input placeholder="请输入密码" v-model="drawerForm.password"></el-input>
           </el-form-item>
         </el-form>
       </template>
 
       <template #footer>
         <div style="flex: auto">
-          <el-button @click="cancelClick">取消</el-button>
-          <el-button type="primary" @click="confirmClick">确定</el-button>
+          <el-button @click="cancel">取消</el-button>
+          <el-button type="primary" @click="save">确定</el-button>
         </div>
       </template>
     </el-drawer>
@@ -75,19 +75,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { getUserInfoApi } from '@/api/acl/user/index.js'
+import { nextTick, ref } from 'vue'
+import { addOrUpdateUserApi, getUserInfoApi } from '@/api/acl/user/index.js'
+import { ElMessage } from 'element-plus'
+import { formRules } from './formRules.js'
 
 const pageNo = ref(1)
 const pageSize = ref(5)
 const total = ref(0)
-// 表单数据
-const formData = ref({
-  userName: ''
-})
-const form = ref(null) // 表单实例
+const searchInputRef = ref(null) // 人名搜索实例
 const userList = ref([]) // 用户数据列表
 const drawer = ref(false) // 抽屉的显示/隐藏
+const searchFormRef = ref(null) // 搜索表单dom
+const drawerFormRef = ref(null) // 抽屉表单dom
+const drawerFormRules = formRules // 表单校验规则
+// 用户筛选表单数据
+const searchForm = ref({
+  userName: ''
+})
+// 抽屉收集用户信息
+const drawerForm = ref({
+  username: '', // 用户名
+  name: '', // 昵称
+  password: '' // 密码
+})
 
 // 获取全部已有用户列表
 const getHasUserList = async () => {
@@ -114,6 +125,9 @@ const handleCurrentChange = async (e) => {
 // 添加用户
 const addUser = () => {
   drawer.value = true
+  nextTick(() => {
+    drawerFormRef.value.resetFields()
+  })
 }
 
 // 更新已有用户
@@ -124,8 +138,40 @@ const updateUser = (row) => {
 
 // 搜索
 const search = () => {}
+
 // 重置
-const reset = () => {}
+const reset = () => {
+  searchFormRef.value.resetFields()
+  searchInputRef.value.focus()
+}
+
+// 添加/更新用户信息
+const save = async () => {
+  try {
+    await drawerFormRef.value.validate()
+    const res = await addOrUpdateUserApi(drawerForm.value)
+    if (res.code === 200) {
+      drawer.value = false
+      ElMessage({
+        message: drawerForm.value.id ? '更新成功' : '添加成功',
+        type: 'success'
+      })
+      await getHasUserList()
+    } else {
+      ElMessage({
+        message: drawerForm.value.id ? '更新失败' : '添加失败',
+        type: 'error'
+      })
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// 取消
+const cancel = () => {
+  drawer.value = false
+}
 </script>
 
 <style scoped lang="scss">

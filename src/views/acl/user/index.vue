@@ -142,7 +142,6 @@ const isIndeterminate = ref(true) //控制全选/复选框的不确定样式
 const selectIdArr = ref([]) // 批量删除选中的id数组
 const keyword = ref('') // 手机搜索栏关键字
 const settingStore = useLayoutSettingStore() // 获取模板setting仓库
-// 用户筛选表单数据
 // 抽屉收集用户信息
 const drawerForm = ref({
   username: '', // 用户名

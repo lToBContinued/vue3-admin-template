@@ -3,9 +3,9 @@ import USER_URL from './userUrl.js'
 
 // 获取用户列表
 export const getUserInfoApi = (params = {}) => {
-  const { page, limit } = params
+  const { page, limit, keyword } = params
   return request({
-    url: `${USER_URL.ALL_USER_LIST_URL}/${page}/${limit}`
+    url: `${USER_URL.ALL_USER_LIST_URL}/${page}/${limit}/?username=${keyword}`
   })
 }
 

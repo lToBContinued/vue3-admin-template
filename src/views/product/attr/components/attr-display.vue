@@ -136,7 +136,6 @@ const updateAttr = (row) => {
 // 删除表格中的属性
 const removeAttr = async (row) => {
   const res = await deleteAttrApi(row.id)
-  console.log(res) // TODO:删除log
   if (res.code === 200) {
     ElMessage({
       message: '删除成功',

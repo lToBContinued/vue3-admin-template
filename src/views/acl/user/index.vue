@@ -2,12 +2,12 @@
 <template>
   <div class="userLayout">
     <el-card class="search-form">
-      <el-form ref="searchFormRef" :model="searchForm" :inline="true">
+      <el-form :inline="true">
         <el-form-item label="用户名" prop="userName">
-          <el-input ref="searchInputRef" v-model="searchForm.userName" placeholder="请输入用户名"></el-input>
+          <el-input ref="searchInputRef" v-model="keyword" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search">搜索</el-button>
+          <el-button type="primary" @click="search" :disabled="keyword === ''">搜索</el-button>
           <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -124,6 +124,7 @@ import {
 } from '@/api/acl/user/index.js'
 import { ElMessage } from 'element-plus'
 import { formRules } from './formRules.js'
+import useLayoutSettingStore from '@/stores/modules/setting.js'
 
 const pageNo = ref(1)
 const pageSize = ref(5)
@@ -132,7 +133,6 @@ const searchInputRef = ref(null) // 人名搜索实例
 const userList = ref([]) // 用户数据列表
 const drawer = ref(false) // 添加/更新用户的抽屉的显示/隐藏
 const drawer1 = ref(false) // 分配角色的抽屉的显示/隐藏
-const searchFormRef = ref(null) // 搜索表单dom
 const drawerFormRef = ref(null) // 抽屉表单dom
 const drawerFormRules = formRules // 表单校验规则
 const allRole = ref([]) // 全部职位
@@ -140,10 +140,9 @@ const userRole = ref([]) // 当前用户职位
 const checkAll = ref(false) // 复选框全选
 const isIndeterminate = ref(true) //控制全选/复选框的不确定样式
 const selectIdArr = ref([]) // 批量删除选中的id数组
+const keyword = ref('') // 手机搜索栏关键字
+const settingStore = useLayoutSettingStore() // 获取模板setting仓库
 // 用户筛选表单数据
-const searchForm = ref({
-  userName: ''
-})
 // 抽屉收集用户信息
 const drawerForm = ref({
   username: '', // 用户名
@@ -155,7 +154,8 @@ const drawerForm = ref({
 const getHasUserList = async () => {
   const params = {
     page: pageNo.value,
-    limit: pageSize.value
+    limit: pageSize.value,
+    keyword: keyword.value
   }
   const res = await getUserInfoApi(params)
   if (res.code === 200) {
@@ -195,12 +195,14 @@ const updateUser = (row) => {
 }
 
 // 搜索
-const search = () => {}
+const search = async () => {
+  await getHasUserList() // 根据关键字获取用户的数据
+  keyword.value = ''
+}
 
 // 重置
-const reset = () => {
-  searchFormRef.value.resetFields()
-  searchInputRef.value.focus()
+const reset = async () => {
+  settingStore.refresh = !settingStore.refresh
 }
 
 // 添加/更新用户信息

@@ -35,10 +35,28 @@ export const getAllRoleApi = (params = {}) => {
 }
 
 // 分配职位
-export const postSetUserRoleApi = (data) => {
+export const postSetUserRoleApi = (data = {}) => {
   return request({
     url: USER_URL.SET_ROLE_URL,
     method: 'POST',
+    data
+  })
+}
+
+// 删除某一个用户
+export const deleteUserApi = (data = {}) => {
+  const { id } = data
+  return request({
+    url: `${USER_URL.DELETE_USER_URL}/${id}`,
+    method: 'DELETE'
+  })
+}
+
+// 批量删除用户
+export const deleteAllUserApi = (data = {}) => {
+  return request({
+    url: USER_URL.DELETE_ALL_USER_URL,
+    method: 'DELETE',
     data
   })
 }

@@ -16,9 +16,9 @@
     <!--用户信息-->
     <el-card style="margin-top: 10px">
       <el-button type="primary" @click="addUser">添加用户</el-button>
-      <el-button type="danger">批量删除</el-button>
+      <el-button type="danger" :disabled="selectIdArr.length === 0" @click="deleteSelectUser"> 批量删除 </el-button>
       <!--用户信息-->
-      <el-table :data="userList" style="margin: 10px 0" border>
+      <el-table :data="userList" style="margin: 10px 0" border @selection-change="selectChange">
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column label="#" align="center" type="index"></el-table-column>
         <el-table-column label="id" align="center" prop="id"></el-table-column>
@@ -31,7 +31,11 @@
           <template #default="{ row, $index }">
             <el-button type="primary" icon="User" size="small" @click="setRole(row)">分配角色 </el-button>
             <el-button type="primary" icon="Edit" size="small" @click="updateUser(row)">编辑 </el-button>
-            <el-button type="primary" icon="Delete" size="small">删除</el-button>
+            <el-popconfirm title="确定要删除吗？" @confirm="deleteUser(row.id)">
+              <template #reference>
+                <el-button type="primary" icon="Delete" size="small">删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -110,7 +114,14 @@
 
 <script setup>
 import { nextTick, ref } from 'vue'
-import { addOrUpdateUserApi, getAllRoleApi, getUserInfoApi, postSetUserRoleApi } from '@/api/acl/user/index.js'
+import {
+  addOrUpdateUserApi,
+  deleteAllUserApi,
+  deleteUserApi,
+  getAllRoleApi,
+  getUserInfoApi,
+  postSetUserRoleApi
+} from '@/api/acl/user/index.js'
 import { ElMessage } from 'element-plus'
 import { formRules } from './formRules.js'
 
@@ -128,6 +139,7 @@ const allRole = ref([]) // 全部职位
 const userRole = ref([]) // 当前用户职位
 const checkAll = ref(false) // 复选框全选
 const isIndeterminate = ref(true) //控制全选/复选框的不确定样式
+const selectIdArr = ref([]) // 批量删除选中的id数组
 // 用户筛选表单数据
 const searchForm = ref({
   userName: ''
@@ -255,6 +267,49 @@ const confirmSetRole = async () => {
     })
     drawer1.value = false
     await getHasUserList()
+  }
+}
+
+// 删除某一个用户
+const deleteUser = async (id) => {
+  const params = { id }
+  const res = await deleteUserApi(params)
+  if (res.code === 200) {
+    ElMessage({
+      message: '删除成功',
+      type: 'success'
+    })
+    await getHasUserList()
+  } else {
+    ElMessage({
+      message: '删除失败，请重试',
+      type: 'error'
+    })
+  }
+}
+
+// table复选框勾选的时候触发的事件
+const selectChange = (val) => {
+  selectIdArr.value = val
+}
+
+// 批量删除用户
+const deleteSelectUser = async () => {
+  const data = {
+    idList: selectIdArr.value.map((item) => item.id)
+  }
+  const res = await deleteAllUserApi(data)
+  if (res.code === 200) {
+    ElMessage({
+      message: '删除成功',
+      type: 'success'
+    })
+    await getHasUserList()
+  } else {
+    ElMessage({
+      message: '删除失败，请重试',
+      type: 'error'
+    })
   }
 }
 

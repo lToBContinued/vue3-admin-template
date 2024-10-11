@@ -1,4 +1,6 @@
 // 全局导航守卫
+// noinspection JSUnresolvedReference
+
 import router from '@/router'
 import nprogress from 'nprogress' // 引入进度条插件
 import 'nprogress/nprogress.css'

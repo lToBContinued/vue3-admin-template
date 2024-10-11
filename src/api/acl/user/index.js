@@ -25,3 +25,20 @@ export const addOrUpdateUserApi = (data = {}) => {
     })
   }
 }
+
+// 获取全部职位以及包含当前用户已有的职位
+export const getAllRoleApi = (params = {}) => {
+  const { userId } = params
+  return request({
+    url: `${USER_URL.ALL_ROLE_URL}/${userId}`
+  })
+}
+
+// 分配职位
+export const postSetUserRoleApi = (data) => {
+  return request({
+    url: USER_URL.SET_ROLE_URL,
+    method: 'POST',
+    data
+  })
+}

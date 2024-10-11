@@ -47,7 +47,7 @@
     <!--添加新用户/更新已有的账号信息-->
     <el-drawer v-model="drawer">
       <template #header>
-        <h4>添加用户</h4>
+        <h4>{{ drawerForm.id ? '更新用户' : '添加用户' }}</h4>
       </template>
 
       <template #default>
@@ -58,7 +58,7 @@
           <el-form-item label="用户昵称" prop="name">
             <el-input placeholder="请输入用户昵称" v-model="drawerForm.name"></el-input>
           </el-form-item>
-          <el-form-item label="用户密码" prop="password">
+          <el-form-item v-if="!drawerForm.id" label="用户密码" prop="password">
             <el-input placeholder="请输入密码" v-model="drawerForm.password"></el-input>
           </el-form-item>
         </el-form>
@@ -125,15 +125,22 @@ const handleCurrentChange = async (e) => {
 // 添加用户
 const addUser = () => {
   drawer.value = true
+  Object.assign(drawerForm.value, { id: '', username: '', name: '', password: '' })
   nextTick(() => {
-    drawerFormRef.value.resetFields()
+    drawerFormRef.value.clearValidate('username')
+    drawerFormRef.value.clearValidate('name')
+    drawerFormRef.value.clearValidate('password')
   })
 }
 
 // 更新已有用户
 const updateUser = (row) => {
   drawer.value = true
-  console.log(row) // TODO:删除log
+  Object.assign(drawerForm.value, row) // 存储收集已有的账号信息
+  nextTick(() => {
+    drawerFormRef.value.clearValidate('username')
+    drawerFormRef.value.clearValidate('name')
+  })
 }
 
 // 搜索
@@ -157,6 +164,8 @@ const save = async () => {
         type: 'success'
       })
       await getHasUserList()
+      // 更新或添加成功后浏览器自动刷新一次
+      window.location.reload()
     } else {
       ElMessage({
         message: drawerForm.value.id ? '更新失败' : '添加失败',

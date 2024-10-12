@@ -25,3 +25,11 @@ export const addOrUpdateRoleApi = (data = {}) => {
     })
   }
 }
+
+// 获取全部菜单与按钮的权限
+export const getAllMenuListApi = (params = {}) => {
+  const { roleId } = params
+  return request({
+    url: `${ROLE_URL.ALL_PERMISSION_UEL}/${roleId}`
+  })
+}

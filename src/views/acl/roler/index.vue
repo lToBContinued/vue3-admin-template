@@ -25,7 +25,7 @@
         <el-table-column label="更新时间" align="center" prop="updateTime" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template #default="{ row }">
-            <el-button type="primary" icon="User" size="small">分配权限</el-button>
+            <el-button type="primary" icon="User" size="small" @click="setPermission(row)"> 分配权限 </el-button>
             <el-button type="primary" icon="Edit" size="small" @click="updateRole(row)">编辑 </el-button>
             <el-popconfirm title="确定要删除吗？">
               <template #reference>
@@ -59,11 +59,28 @@
         </div>
       </template>
     </el-dialog>
+
+    <!--抽屉：分配职位的菜单权限和按钮权限-->
+    <el-drawer v-model="drawer" title="分配权限">
+      <!--树形控件-->
+      <el-tree
+        style="max-width: 600px"
+        :data="menuArr"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :props="defaultProps"
+      />
+      <template #footer>
+        <el-button @click="drawer = false">取消</el-button>
+        <el-button type="primary">确定</el-button>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { addOrUpdateRoleApi, getAllRoleApi } from '@/api/acl/role/index.js'
+import { addOrUpdateRoleApi, getAllMenuListApi, getAllRoleApi } from '@/api/acl/role/index.js'
 import { ref, onMounted, nextTick } from 'vue'
 import useLayoutSettingStore from '@/stores/modules/setting.js'
 import { ElMessage } from 'element-plus'
@@ -74,8 +91,10 @@ const total = ref()
 const allRole = ref([]) // 已有角色列表
 const keyword = ref('') // 搜索关键字
 const settingStore = useLayoutSettingStore() // 获取模板setting仓库
-const dialogVisible = ref(false)
-const ruleFormRef = ref(null)
+const dialogVisible = ref(false) // 弹窗显示与隐藏
+const ruleFormRef = ref(null) // 表单实例
+const drawer = ref(false) // 抽屉显示与隐藏
+const menuArr = ref([]) // 用户菜单权限数据
 // 收集新增岗位的数据
 const roleParams = ref({
   roleName: ''
@@ -95,6 +114,10 @@ const rules = {
       }
     }
   ]
+}
+const defaultProps = {
+  children: 'children',
+  label: 'name'
 }
 
 onMounted(() => {
@@ -167,6 +190,18 @@ const save = (formRef) => {
       console.log('error submit!', fields)
     }
   })
+}
+// 分配权限
+const setPermission = async (row) => {
+  drawer.value = true
+  Object.assign(roleParams.value, row)
+  const params = {
+    roleId: roleParams.value.id
+  }
+  const res = await getAllMenuListApi(params)
+  if (res.code === 200) {
+    menuArr.value = res.data
+  }
 }
 </script>
 

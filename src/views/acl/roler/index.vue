@@ -26,7 +26,7 @@
         <el-table-column label="操作" width="300" align="center">
           <template #default="{ row }">
             <el-button type="primary" icon="User" size="small">分配权限</el-button>
-            <el-button type="primary" icon="Edit" size="small">编辑</el-button>
+            <el-button type="primary" icon="Edit" size="small" @click="updateRole(row)">编辑 </el-button>
             <el-popconfirm title="确定要删除吗？">
               <template #reference>
                 <el-button type="primary" icon="Delete" size="small">删除</el-button>
@@ -44,13 +44,29 @@
         @current-change="handleCurrentChange"
       ></gn-pagination>
     </el-card>
+
+    <!--添加职位与更新已有职位-->
+    <el-dialog v-model="dialogVisible" :title="roleParams.id ? '更新职位' : '添加职位'" width="500">
+      <el-form :model="roleParams" :rules="rules" ref="ruleFormRef">
+        <el-form-item label="职位名称" prop="roleName">
+          <el-input v-model="roleParams.roleName" placeholder="请输入职位名称"></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="save(ruleFormRef)">确定</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { getAllRoleApi } from '@/api/acl/role/index.js'
-import { ref, onMounted } from 'vue'
+import { addOrUpdateRoleApi, getAllRoleApi } from '@/api/acl/role/index.js'
+import { ref, onMounted, nextTick } from 'vue'
 import useLayoutSettingStore from '@/stores/modules/setting.js'
+import { ElMessage } from 'element-plus'
 
 const pageNo = ref(1)
 const pageSize = ref(5)
@@ -58,6 +74,28 @@ const total = ref()
 const allRole = ref([]) // 已有角色列表
 const keyword = ref('') // 搜索关键字
 const settingStore = useLayoutSettingStore() // 获取模板setting仓库
+const dialogVisible = ref(false)
+const ruleFormRef = ref(null)
+// 收集新增岗位的数据
+const roleParams = ref({
+  roleName: ''
+})
+// 添加职位表单校验规则
+const rules = {
+  roleName: [
+    {
+      required: true,
+      trigger: 'blur',
+      validator: (rule, value, callback) => {
+        if (value.trim().length >= 2) {
+          callback()
+        } else {
+          callback(new Error('职位名称至少两位'))
+        }
+      }
+    }
+  ]
+}
 
 onMounted(() => {
   getHasRole() // 获取已有角色列表
@@ -94,7 +132,42 @@ const reset = () => {
   settingStore.refresh = !settingStore.refresh
 }
 // 添加新职位
-const addRole = () => {}
+const addRole = () => {
+  dialogVisible.value = true
+  nextTick(() => {
+    Object.assign(roleParams.value, { roleName: '', id: 0 })
+    ruleFormRef.value.clearValidate('roleName')
+  })
+}
+// 更新已有职位
+const updateRole = (row) => {
+  dialogVisible.value = true
+  Object.assign(roleParams.value, row) // 获取当前行数据
+  nextTick(() => {
+    ruleFormRef.value.clearValidate('roleName')
+  })
+}
+// 确定按钮的事件
+const save = (formRef) => {
+  formRef.validate(async (valid, fields) => {
+    if (valid) {
+      if (!roleParams.value.id) {
+        pageNo.value = 1
+      }
+      const res = await addOrUpdateRoleApi(roleParams.value)
+      if (res.code === 200) {
+        ElMessage({
+          message: roleParams.value.id ? '更新成功' : '添加成功',
+          type: 'success'
+        })
+        dialogVisible.value = false
+        await getHasRole()
+      }
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

@@ -27,9 +27,9 @@
           <template #default="{ row }">
             <el-button type="primary" icon="User" size="small" @click="setPermission(row)"> 分配权限 </el-button>
             <el-button type="primary" icon="Edit" size="small" @click="updateRole(row)">编辑 </el-button>
-            <el-popconfirm title="确定要删除吗？">
+            <el-popconfirm title="确定要删除吗？" @confirm="removeRole(row)">
               <template #reference>
-                <el-button type="primary" icon="Delete" size="small">删除</el-button>
+                <el-button type="primary" icon="Delete" size="small">删除 </el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -82,7 +82,13 @@
 </template>
 
 <script setup>
-import { addOrUpdateRoleApi, getAllMenuListApi, getAllRoleApi, setPermissionApi } from '@/api/acl/role/index.js'
+import {
+  addOrUpdateRoleApi,
+  getAllMenuListApi,
+  getAllRoleApi,
+  removeRoleApi,
+  setPermissionApi
+} from '@/api/acl/role/index.js'
 import { ref, onMounted, nextTick } from 'vue'
 import useLayoutSettingStore from '@/stores/modules/setting.js'
 import { ElMessage } from 'element-plus'
@@ -238,6 +244,17 @@ const distribute = async () => {
       type: 'success'
     })
     window.location.reload()
+  }
+}
+// 删除职位
+const removeRole = async (row) => {
+  const res = await removeRoleApi(row.id)
+  if (res.code === 200) {
+    ElMessage({
+      message: '删除成功',
+      type: 'success'
+    })
+    await getHasRole()
   }
 }
 </script>

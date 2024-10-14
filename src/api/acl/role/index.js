@@ -42,3 +42,11 @@ export const setPermissionApi = (data = {}) => {
     method: 'POST'
   })
 }
+
+// 删除职位
+export const removeRoleApi = (id) => {
+  return request({
+    url: `${ROLE_URL.REMOVE_ROLE_URL}/${id}`,
+    method: 'DELETE'
+  })
+}

@@ -64,23 +64,25 @@
     <el-drawer v-model="drawer" title="分配权限">
       <!--树形控件-->
       <el-tree
+        ref="tree"
         style="max-width: 600px"
         :data="menuArr"
         show-checkbox
         node-key="id"
         default-expand-all
         :props="defaultProps"
+        :default-checked-keys="selectArr"
       />
       <template #footer>
         <el-button @click="drawer = false">取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="distribute">确定</el-button>
       </template>
     </el-drawer>
   </div>
 </template>
 
 <script setup>
-import { addOrUpdateRoleApi, getAllMenuListApi, getAllRoleApi } from '@/api/acl/role/index.js'
+import { addOrUpdateRoleApi, getAllMenuListApi, getAllRoleApi, setPermissionApi } from '@/api/acl/role/index.js'
 import { ref, onMounted, nextTick } from 'vue'
 import useLayoutSettingStore from '@/stores/modules/setting.js'
 import { ElMessage } from 'element-plus'
@@ -95,6 +97,8 @@ const dialogVisible = ref(false) // 弹窗显示与隐藏
 const ruleFormRef = ref(null) // 表单实例
 const drawer = ref(false) // 抽屉显示与隐藏
 const menuArr = ref([]) // 用户菜单权限数据
+const selectArr = ref([]) // 存储勾选的节点的id（四级的）
+const tree = ref(null) // 树形控件实例
 // 收集新增岗位的数据
 const roleParams = ref({
   roleName: ''
@@ -201,6 +205,39 @@ const setPermission = async (row) => {
   const res = await getAllMenuListApi(params)
   if (res.code === 200) {
     menuArr.value = res.data
+    selectArr.value = filterSelectArr(menuArr.value, [])
+  }
+}
+// 过滤出用户的权限节点的id
+const filterSelectArr = (allData, initArr) => {
+  allData.forEach((item) => {
+    if (item.select && item.level === 4) {
+      initArr.push(item.id)
+    }
+    if (item.children && item.children.length > 0) {
+      filterSelectArr(item.children, initArr)
+    }
+  })
+  return initArr
+}
+// 确定分配权限按钮的事件
+const distribute = async () => {
+  const roleId = roleParams.value.id // 职位的id
+  const arr = tree.value.getCheckedKeys() // 选中节点的id
+  const arr1 = tree.value.getHalfCheckedKeys() // 半选的id
+  const permissionId = arr.concat(arr1)
+  const data = {
+    roleId,
+    permissionId
+  }
+  const res = await setPermissionApi(data)
+  if (res.code === 200) {
+    drawer.value = false
+    ElMessage({
+      message: '分配权限成功',
+      type: 'success'
+    })
+    window.location.reload()
   }
 }
 </script>

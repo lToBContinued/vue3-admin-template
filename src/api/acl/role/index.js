@@ -33,3 +33,12 @@ export const getAllMenuListApi = (params = {}) => {
     url: `${ROLE_URL.ALL_PERMISSION_UEL}/${roleId}`
   })
 }
+
+// 给相应的职位下发权限
+export const setPermissionApi = (data = {}) => {
+  const { roleId, permissionId } = data
+  return request({
+    url: `${ROLE_URL.SET_PERMISSION_URL}?roleId=${roleId}&permissionId=${permissionId}`,
+    method: 'POST'
+  })
+}

@@ -24,3 +24,11 @@ export const addOrUpdateMenuApi = (data = {}) => {
     })
   }
 }
+
+// 删除已有菜单
+export const removeMenuApi = (id) => {
+  return request({
+    url: `/admin/acl/permission/remove/${id}`,
+    method: 'DELETE'
+  })
+}

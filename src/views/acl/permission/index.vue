@@ -19,7 +19,7 @@
           <el-button type="primary" icon="Edit" size="small" :disabled="row.level === 1" @click="updatePermission(row)">
             编辑
           </el-button>
-          <el-popconfirm title="确定要删除吗？">
+          <el-popconfirm title="确定要删除吗？" @confirm="deleteMenu(row)">
             <template #reference>
               <el-button type="primary" icon="Delete" size="small" :disabled="row.level === 1"> 删除 </el-button>
             </template>
@@ -50,7 +50,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { addOrUpdateMenuApi, getPermissionListApi } from '@/api/acl/permission/index.js'
+import { addOrUpdateMenuApi, getPermissionListApi, removeMenuApi } from '@/api/acl/permission/index.js'
 import { ElMessage } from 'element-plus'
 
 const permissionArr = ref([]) // 菜单列表
@@ -99,6 +99,17 @@ const save = async () => {
     dialogVisible.value = false
     ElMessage({
       message: menuData.id ? '更新成功' : '添加成功',
+      type: 'success'
+    })
+    await getHasPermissionList()
+  }
+}
+// 删除菜单
+const deleteMenu = async (row) => {
+  const res = await removeMenuApi(row.id)
+  if (res.code === 200) {
+    ElMessage({
+      message: '删除成功',
       type: 'success'
     })
     await getHasPermissionList()

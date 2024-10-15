@@ -7,7 +7,11 @@
         <top></top>
       </div>
       <div class="bottom">
-        <div class="left">左侧</div>
+        <div class="left">
+          <tourist class="tourist"></tourist>
+          <sex class="sex"></sex>
+          <age class="age"></age>
+        </div>
         <div class="center">中间</div>
         <div class="right">右侧</div>
       </div>
@@ -18,6 +22,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import Top from '@/views/screen/components/top.vue'
+import Tourist from '@/views/screen/components/tourist.vue'
+import Sex from '@/views/screen/components/sex.vue'
+import Age from '@/views/screen/components/age.vue'
 
 const screen = ref(null) // 数据大屏内容的dom
 
@@ -67,7 +74,22 @@ window.onresize = () => {
   }
 
   .left {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    height: 1040px;
+
+    .tourist {
+      flex: 1.2;
+    }
+
+    .sex {
+      flex: 1;
+    }
+
+    .age {
+      flex: 1;
+    }
   }
 
   .center {

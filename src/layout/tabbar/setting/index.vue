@@ -3,10 +3,10 @@
     <div class="tabbar-right">
       <el-button size="small" type="primary" circle icon="Refresh" @click="pageRefresh"></el-button>
       <el-button size="small" type="primary" circle icon="FullScreen" @click="changeFullScreen"></el-button>
-      <el-popover placement="bottom" title="主题" :width="300" trigger="hover">
+      <el-popover :visible="popoverVisible" placement="bottom" title="主题" :width="300" trigger="hover">
         <el-form>
           <el-form-item label="主题颜色">
-            <el-color-picker v-model="color" size="small" show-alpha :predefine="predefineColors" />
+            <el-color-picker v-model="color" size="small" show-alpha :predefine="predefineColors" @change="setColor" />
           </el-form-item>
           <el-form-item label="暗黑模式">
             <el-switch
@@ -20,7 +20,13 @@
           </el-form-item>
         </el-form>
         <template #reference>
-          <el-button size="small" type="primary" circle icon="Setting"></el-button>
+          <el-button
+            size="small"
+            type="primary"
+            circle
+            icon="Setting"
+            @click="popoverVisible = !popoverVisible"
+          ></el-button>
         </template>
       </el-popover>
       <img class="tabbar-avatar" :src="userStore.avatar" alt="" />
@@ -69,8 +75,9 @@ const $route = useRoute()
 const layoutSettingStore = useLayoutSettingStore() // layout相关配置仓库
 const userStore = useUserStore() // 用户仓库
 const dialogVisible = ref(false) // 对话框可见性
+const popoverVisible = ref(false) // 弹出框可见性
 const dark = ref(false) // 开关数据
-const color = ref('rgba(255, 69, 0, 0.68)')
+const color = ref('rgba(255, 69, 0, 0.68)') // 颜色数据
 const predefineColors = ref([
   '#ff4500',
   '#ff8c00',
@@ -120,6 +127,12 @@ const confirmLogout = async () => {
 const changeDark = () => {
   const html = document.documentElement // 获取html根节点
   dark.value ? (html.className = 'dark') : (html.className = '')
+}
+
+// 主题颜色设置
+const setColor = () => {
+  const html = document.documentElement // 获取html根节点
+  html.style.setProperty('--el-color-primary', color.value)
 }
 </script>
 

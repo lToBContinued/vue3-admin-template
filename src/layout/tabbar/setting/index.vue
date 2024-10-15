@@ -3,7 +3,26 @@
     <div class="tabbar-right">
       <el-button size="small" type="primary" circle icon="Refresh" @click="pageRefresh"></el-button>
       <el-button size="small" type="primary" circle icon="FullScreen" @click="changeFullScreen"></el-button>
-      <el-button size="small" type="primary" circle icon="Setting"></el-button>
+      <el-popover placement="bottom" title="主题" :width="300" trigger="hover">
+        <el-form>
+          <el-form-item label="主题颜色">
+            <el-color-picker v-model="color" size="small" show-alpha :predefine="predefineColors" />
+          </el-form-item>
+          <el-form-item label="暗黑模式">
+            <el-switch
+              v-model="dark"
+              size="small"
+              active-icon="Moon"
+              inactive-icon="Sunny"
+              inline-prompt
+              @change="changeDark"
+            />
+          </el-form-item>
+        </el-form>
+        <template #reference>
+          <el-button size="small" type="primary" circle icon="Setting"></el-button>
+        </template>
+      </el-popover>
       <img class="tabbar-avatar" :src="userStore.avatar" alt="" />
       <!--下拉菜单-->
       <el-dropdown>
@@ -50,6 +69,24 @@ const $route = useRoute()
 const layoutSettingStore = useLayoutSettingStore() // layout相关配置仓库
 const userStore = useUserStore() // 用户仓库
 const dialogVisible = ref(false) // 对话框可见性
+const dark = ref(false) // 开关数据
+const color = ref('rgba(255, 69, 0, 0.68)')
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+  'rgba(255, 69, 0, 0.68)',
+  'rgb(255, 120, 0)',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577'
+])
 
 // 刷新页面
 const pageRefresh = () => {
@@ -77,6 +114,12 @@ const confirmLogout = async () => {
       redirect: $route.path
     }
   })
+}
+
+// 切换暗黑模式
+const changeDark = () => {
+  const html = document.documentElement // 获取html根节点
+  dark.value ? (html.className = 'dark') : (html.className = '')
 }
 </script>
 

@@ -95,7 +95,6 @@ const layoutSettingStore = useLayoutSettingStore() // layout配置仓库
     width: calc(100% - $base-menu-width);
     height: calc(100vh - $base-tabbar-height);
     padding: 20px;
-    background-color: #f6f6f6;
     overflow: auto;
     transition: all 0.3s;
 

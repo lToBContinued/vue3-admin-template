@@ -31,7 +31,6 @@ onMounted(()=>{
   const myCharts = echarts.init(charts.value)
   myCharts.setOption(sexRate)
 })
-
 </script>
 
 <style lang="scss" scoped>

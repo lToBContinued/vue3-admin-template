@@ -83,9 +83,7 @@ export const ageRate = {
       fontSize: '14px'
     }
   },
-  emphasis:{
-  
-  },
+  emphasis: {},
   series: [
     {
       name: 'Access From',
@@ -120,4 +118,126 @@ export const ageRate = {
     bottom: '0',
     top: '0'
   }
+}
+
+// 地图
+export const mapOption = {
+  // 地图配置
+  geo: {
+    map: 'china', //地图类型
+    roam: true,
+    left: 80,
+    right: 80,
+    bottom: 80,
+    top: 80,
+    // 标签样式
+    label: {
+      show: true,
+      color: '#19FFFC',
+      fontSize: 14
+    },
+    // 地图高亮情况下的样式
+    emphasis: {
+      itemStyle: {
+        color: 'red'
+      },
+      label: {
+        fontSize: '30px',
+        color: '#fff',
+        fontWeight: 700
+      }
+    },
+    // 每一个多边形的样式
+    itemStyle: {
+      // 渐变颜色效果
+      color: {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [
+          {
+            offset: 0,
+            color: '#007AFE' // 0% 处的颜色
+          },
+          {
+            offset: 1,
+            color: '#1569C3' // 100% 处的颜色
+          }
+        ],
+        global: false // 缺省为 false
+      }
+    }
+  },
+  series: [
+    {
+      type: 'lines', // 航线的系列
+      data: [
+        {
+          coords: [
+            [116.405285, 39.904989], // 起点北京
+            [87.617733, 43.792818] // 终点新疆
+          ],
+          // 统一的样式设置
+          lineStyle: {
+            color: '#fff',
+            width: 2, // 线粗细
+            cap: 'round', // 线末端的结束方式
+            opacity: 0.3, // 透明度
+            curveness: -0.15 // 弯曲度
+          }
+        },
+        {
+          coords: [
+            [116.405285, 39.904989], // 起点北京
+            [121.472644, 31.231706] // 终点上海
+          ],
+          // 统一的样式设置
+          lineStyle: {
+            color: '#fff',
+            width: 2, // 线粗细
+            cap: 'round', // 线末端的结束方式
+            opacity: 0.3, // 透明度
+            curveness: -0.15 // 弯曲度
+          }
+        },
+        {
+          coords: [
+            [116.405285, 39.904989], // 起点北京
+            [108.320004, 22.82402] // 终点广西
+          ],
+          // 统一的样式设置
+          lineStyle: {
+            color: '#fff',
+            width: 2, // 线粗细
+            cap: 'round', // 线末端的结束方式
+            opacity: 0.3, // 透明度
+            curveness: -0.15 // 弯曲度
+          }
+        },
+        {
+          coords: [
+            [101.778916, 36.623178], // 起点青海
+            [114.298572, 30.584355] // 终点湖北
+          ],
+          // 统一的样式设置
+          lineStyle: {
+            color: '#fff',
+            width: 2, // 线粗细
+            cap: 'round', // 线末端的结束方式
+            opacity: 0.3, // 透明度
+            curveness: -0.15 // 弯曲度
+          }
+        }
+      ],
+      // 线的特效
+      effect: {
+        show: true,
+        symbol:
+          'path://M922.6 698.6v-74.7l-335.9-224V138.6S586.7 64 512 64s-74.7 74.6-74.7 74.6v261.3L101.4 624v74.7l335.9-112v209.1l-112 89.6V960L512 885.3l186.6 74.6v-74.6l-112-89.6V586.6l336 112z',
+        symbolSize: 20
+      }
+    }
+  ]
 }

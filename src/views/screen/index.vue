@@ -12,7 +12,10 @@
           <sex class="sex"></sex>
           <age class="age"></age>
         </div>
-        <div class="center">中间</div>
+        <div class="center">
+          <Map class="map"></Map>
+          <Line class="line"></Line>
+        </div>
         <div class="right">右侧</div>
       </div>
     </div>
@@ -25,6 +28,8 @@ import Top from '@/views/screen/components/top.vue'
 import Tourist from '@/views/screen/components/tourist.vue'
 import Sex from '@/views/screen/components/sex.vue'
 import Age from '@/views/screen/components/age.vue'
+import Map from '@/views/screen/components/map.vue'
+import Line from '@/views/screen/components/line.vue'
 
 const screen = ref(null) // 数据大屏内容的dom
 
@@ -93,7 +98,17 @@ window.onresize = () => {
   }
 
   .center {
+    display: flex;
+    flex-direction: column;
     flex: 2;
+
+    .map {
+      flex: 4;
+    }
+
+    .line {
+      flex: 1;
+    }
   }
 }
 </style>

@@ -38,55 +38,55 @@ onMounted(() => {
   margin-top: 10px;
   background: url('../images/dataScreen-main-lb.png') no-repeat;
   background-size: 100% 100%;
-}
 
-.top {
-  margin-left: 20px;
+  .top {
+    margin-left: 20px;
 
-  .title {
-    color: #fff;
-    font-size: 20px;
-  }
+    .title {
+      color: #fff;
+      font-size: 20px;
+    }
 
-  .bg {
-    width: 68px;
-    height: 7px;
-    margin-top: 10px;
-    background: url('../images/dataScreen-title.png') no-repeat;
-    background-size: 100% 100%;
-  }
+    .bg {
+      width: 68px;
+      height: 7px;
+      margin-top: 10px;
+      background: url('../images/dataScreen-title.png') no-repeat;
+      background-size: 100% 100%;
+    }
 
-  .right {
-    margin-right: 10px;
-    float: right;
-    color: #fff;
-    font-size: 20px;
+    .right {
+      margin-right: 10px;
+      float: right;
+      color: #fff;
+      font-size: 20px;
 
-    span {
-      color: yellowgreen;
+      span {
+        color: yellowgreen;
+      }
     }
   }
-}
 
-.number {
-  display: flex;
-  margin-top: 30px;
-  padding: 10px;
+  .number {
+    display: flex;
+    margin-top: 30px;
+    padding: 10px;
 
-  span {
-    flex: 1;
-    height: 50px;
-    background: url('../images/total.png') no-repeat;
-    background-size: 100% 100%;
-    text-align: center;
-    line-height: 50px;
-    color: #19fffc;
+    span {
+      flex: 1;
+      height: 50px;
+      background: url('../images/total.png') no-repeat;
+      background-size: 100% 100%;
+      text-align: center;
+      line-height: 50px;
+      color: #19fffc;
+    }
   }
-}
 
-.charts {
-  width: 100%;
-  height: 240px;
-  color: #fff;
+  .charts {
+    width: 100%;
+    height: 240px;
+    color: #fff;
+  }
 }
 </style>

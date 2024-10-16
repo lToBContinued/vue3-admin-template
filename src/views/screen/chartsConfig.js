@@ -27,3 +27,44 @@ export const touristLiquidFill = {
     top: 0
   }
 }
+
+// 性别比例图表
+export const sexRate = {
+  xAxis: {
+    show: false,
+    min: 0,
+    max: 100
+  },
+  yAxis: {
+    show: false,
+    type: 'category'
+  },
+  series: [
+    {
+      type: 'bar',
+      data: [58],
+      barWidth: '20px',
+      itemStyle: {
+        color: '#007AFE',
+        borderRadius: 999
+      },
+      z: 999
+    },
+    {
+      type: 'bar',
+      data: [100],
+      barWidth: '20px',
+      barGap: '-100%',
+      itemStyle: {
+        color: '#FF4B7A',
+        borderRadius: 999
+      }
+    }
+  ],
+  grid: {
+    left: '0',
+    right: '0',
+    bottom: '0',
+    top: '0'
+  }
+}

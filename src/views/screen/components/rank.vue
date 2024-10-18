@@ -1,7 +1,7 @@
 <template>
   <div class="rankLayout">
     <div class="title">
-      <p>年龄比例</p>
+      <p>热门景区排行</p>
       <img src="../images/dataScreen-title.png" alt="" />
     </div>
     <div class="charts" ref="charts"></div>
@@ -29,8 +29,6 @@ onMounted(() => {
   background-size: 100% 100%;
 
   .title {
-    margin-left: 20px;
-
     p {
       color: #fff;
       font-size: 20px;

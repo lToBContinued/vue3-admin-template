@@ -384,3 +384,43 @@ export const rankOption = {
     top: 100
   }
 }
+
+// 年度游客量对比
+export const yearOptions = {
+  title: {
+    text: '散点图',
+    left: '50%',
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  xAxis: {
+    type: 'category',
+    show: false
+  },
+  yAxis: {
+    show: false
+  },
+  series: {
+    type: 'scatter',
+    data: [33, 88, 21, 9, 788, 1234, 16, 88, 22, 462, 75],
+    symbol: 'diamond', // 标记图形设置
+    symbolSize: 16, // 点大小
+    // 图文标签
+    label: {
+      show: true,
+      position: 'top',
+      color: 'lightgreen'
+    },
+    // 点的样式
+    itemStyle:{
+      color: '#FF69B4'
+    }
+  },
+  grid: {
+    left: 40,
+    right: 20,
+    bottom: 40,
+    top: 40
+  }
+}

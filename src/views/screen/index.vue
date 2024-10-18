@@ -92,7 +92,6 @@ window.onresize = () => {
 
     .year {
       flex: 1;
-      background: lightblue;
       margin: 20px 0;
     }
 

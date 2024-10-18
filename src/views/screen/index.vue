@@ -97,7 +97,6 @@ window.onresize = () => {
 
     .counter {
       flex: 1;
-      background: lightcoral;
     }
   }
 

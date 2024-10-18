@@ -19,7 +19,6 @@ import Setting from './setting/index.vue'
   align-items: center;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #fff5f5, #e5ffec, #e5ebff);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
 }

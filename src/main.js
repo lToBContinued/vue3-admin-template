@@ -8,6 +8,7 @@ const app = createApp(App)
 // element插件安装
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css' // 暗黑模式的样式
 //@js-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'virtual:svg-icons-register' // 导入svg图标

@@ -16,7 +16,11 @@
           <Map class="map"></Map>
           <Line class="line"></Line>
         </div>
-        <div class="right">右侧</div>
+        <div class="right">
+          <rank class="rank"></rank>
+          <year class="year"></year>
+          <counter class="counter"></counter>
+        </div>
       </div>
     </div>
   </div>
@@ -24,12 +28,15 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import Top from '@/views/screen/components/top.vue'
-import Tourist from '@/views/screen/components/tourist.vue'
-import Sex from '@/views/screen/components/sex.vue'
-import Age from '@/views/screen/components/age.vue'
-import Map from '@/views/screen/components/map.vue'
-import Line from '@/views/screen/components/line.vue'
+import Top from './components/top.vue'
+import Tourist from './components/tourist.vue'
+import Sex from './components/sex.vue'
+import Age from './components/age.vue'
+import Map from './components/map.vue'
+import Line from './components/line.vue'
+import Counter from './components/counter.vue'
+import Rank from './components/rank.vue'
+import Year from './components/year.vue'
 
 const screen = ref(null) // 数据大屏内容的dom
 
@@ -75,7 +82,24 @@ window.onresize = () => {
   display: flex;
 
   .right {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+
+    .rank {
+      flex: 1.5;
+    }
+
+    .year {
+      flex: 1;
+      background: lightblue;
+      margin: 20px 0;
+    }
+
+    .counter {
+      flex: 1;
+      background: lightcoral;
+    }
   }
 
   .left {
@@ -101,6 +125,7 @@ window.onresize = () => {
     display: flex;
     flex-direction: column;
     flex: 2;
+    padding: 0 20px;
 
     .map {
       flex: 4;

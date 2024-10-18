@@ -250,7 +250,7 @@ export const touristLine = {
     splitLine: false, // 不显示分割线
     data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
     // 刻度
-    axisTick:{
+    axisTick: {
       show: true // 显示刻度
     }
   },
@@ -261,7 +261,7 @@ export const touristLine = {
       show: true // 显示轴线
     },
     // 刻度
-    axisTick:{
+    axisTick: {
       show: true // 显示刻度
     }
   },
@@ -297,5 +297,90 @@ export const touristLine = {
     right: 0,
     bottom: 20,
     top: 20
+  }
+}
+
+// 景点排行
+export const rankOption = {
+  title: {
+    text: '景区排行', // 主标题
+    left: '40%', // 标题位置
+    link: 'https://www.baidu.com', // 点击跳转页面
+    textStyle: {
+      color: '#fff',
+      fontSize: 20
+    },
+    // 子标题
+    subtext: '各大景区排行',
+    subtextStyle: {
+      color: 'yellow',
+      fontSize: 14
+    }
+  },
+  xAxis: {
+    type: 'category'
+  },
+  yAxis: {},
+  series: [
+    // 柱状图
+    {
+      type: 'bar',
+      data: [10, 20, 30, 40, 50, 60, 70],
+      // 柱状图图形上的文本标签
+      label: {
+        show: true,
+        position: 'insideTop', // 文字的位置
+        color: 'yellow'
+      },
+      showBackground: true, // 是否显示背景颜色
+      backgroundStyle: {
+        // 底部背景颜色
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: 'black' // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: 'blue' // 100% 处的颜色
+            }
+          ],
+          global: false // 缺省为 false
+        }
+      },
+      // 每个柱子的样式
+      itemStyle: {
+        color: function (data) {
+          const arr = ['red', 'orange', 'yellow', 'green', 'purple', 'hotpink', 'skyblue']
+          return arr[data.dataIndex]
+        },
+        // 边框样式
+        borderRadius: [5, 5, 0, 0],
+        borderWidth: 2,
+        borderColor: '#fff'
+      }
+    },
+    // 折现图
+    {
+      type: 'line',
+      data: [10, 20, 30, 40, 20, 60, 70],
+      smooth: true
+    }
+  ],
+  // 提示框
+  tooltip: {
+    show: true
+  },
+  grid: {
+    left: 40,
+    right: 40,
+    bottom: 30,
+    top: 100
   }
 }

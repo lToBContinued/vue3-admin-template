@@ -241,3 +241,61 @@ export const mapOption = {
     }
   ]
 }
+
+// 游客数量趋势折线图
+export const touristLine = {
+  xAxis: {
+    type: 'category',
+    boundaryGap: 0, // x轴两侧不留白
+    splitLine: false, // 不显示分割线
+    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+    // 刻度
+    axisTick:{
+      show: true // 显示刻度
+    }
+  },
+  yAxis: {
+    splitLine: false, // 不显示分割线
+    // 轴线设置
+    axisLine: {
+      show: true // 显示轴线
+    },
+    // 刻度
+    axisTick:{
+      show: true // 显示刻度
+    }
+  },
+  series: [
+    {
+      type: 'line',
+      data: [120, 1240, 66, 99, 321, 890, 1200],
+      smooth: true, // 平滑曲线
+      areaStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: 'orange' // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: 'transparent' // 100% 处的颜色
+            }
+          ],
+          global: false // 缺省为 false
+        }
+      }
+    }
+  ],
+  grid: {
+    left: 50,
+    right: 0,
+    bottom: 20,
+    top: 20
+  }
+}

@@ -39,6 +39,21 @@ export const constantRoute = [
     },
     component: () => import('@/views/screen/index.vue')
   },
+  // 404
+  {
+    path: '/404',
+    name: '404',
+    meta: {
+      title: '404',
+      hidden: true,
+      icon: 'DocumentDelete'
+    },
+    component: () => import('@/views/404/index.vue')
+  }
+]
+
+// 异步路由
+export const asyncRoute = [
   // 商品管理
   {
     path: '/product',
@@ -106,7 +121,7 @@ export const constantRoute = [
       // 用户管理
       {
         path: '/acl/user',
-        name: 'Acl',
+        name: 'User',
         meta: {
           title: '用户管理',
           hidden: false,
@@ -137,18 +152,11 @@ export const constantRoute = [
         component: () => import('@/views/acl/permission/index.vue')
       }
     ]
-  },
-  // 404
-  {
-    path: '/404',
-    name: '404',
-    meta: {
-      title: '404',
-      hidden: true,
-      icon: 'DocumentDelete'
-    },
-    component: () => import('@/views/404/index.vue')
-  },
+  }
+]
+
+// 任意理由
+export const anyRoute = [
   // 任意路由
   {
     path: '/:pathMatch(.*)*',

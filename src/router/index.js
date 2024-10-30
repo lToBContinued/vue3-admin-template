@@ -3,7 +3,7 @@ import { constantRoute } from '@/router/routes.js'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: constantRoute,
+  routes: [...constantRoute],
   // 滚动行为
   scrollBehavior() {
     return {

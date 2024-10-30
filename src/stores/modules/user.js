@@ -26,7 +26,8 @@ const useUserStore = defineStore('User', {
       token: GET_TOKEN(), // 用户token
       menusRoutes: [...constantRoute, ...asyncRoute, ...anyRoute], // 仓库存储生成菜单需要数组（路由）
       username: '', // 用户名
-      avatar: '' // 用户头像
+      avatar: '', // 用户头像
+      buttons: [] // 当前用户是否包含某一个按钮
     }
   },
   actions: {
@@ -51,6 +52,7 @@ const useUserStore = defineStore('User', {
         // 获取用户信息成功
         this.username = res.data.name
         this.avatar = res.data.avatar
+        this.buttons = res.data.buttons
         const userAsyncRoutes = filterAsyncRoutes(cloneDeep(asyncRoute), res.data.routes)
         // 菜单的数据
         this.menusRoutes = [...constantRoute, ...userAsyncRoutes, ...anyRoute]

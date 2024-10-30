@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <!--添加品牌按钮-->
-      <el-button type="primary" @click="addBrand('add')" icon="Plus">添加品牌</el-button>
+      <el-button type="primary" @click="addBrand('add')" icon="Plus" v-has="`btn.Trademark.add`">添加品牌</el-button>
 
       <!--表格展示-->
       <el-table style="margin: 10px 0" :data="trademarkList" highlight-current-row border>

@@ -16,6 +16,7 @@ import globalComponent from './components/index' // 全局组件
 import './styles/index.scss' // 引入模板的全局样式
 import pinia from '@/stores/index.js' // 引入pinia仓库
 import './permission.js' // 引入全局导航守卫
+import { isHasButton } from '@/directive/has.js' // 引入自定义指令
 
 app.use(createPinia())
 app.use(router)
@@ -25,5 +26,6 @@ app.use(ElementPlus, {
 })
 app.use(globalComponent) // 注册全局组件
 app.use(pinia) // 安装仓库
+isHasButton(app)
 
 app.mount('#app')
